@@ -1,4 +1,7 @@
 ---
 - name: Check os of remote
-  debug: 
-    msg: "{{ hostvars[inventory_hostname].ansible_distribution }}"
+  set_fact: remote_os="{{ hostvars[inventory_hostname].ansible_distribution }}"
+
+- name: Install on Ubuntu
+  import_tasks: install_on_ubuntu.yml
+  when: remote_os == 'Ubuntu'
