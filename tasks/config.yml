@@ -1,0 +1,11 @@
+---
+- name: Check if initialAdminPassword file exists
+  stat:
+    path: /var/lib/jenkins/secrets/initialAdminPassword
+  register: initialAdminPassword_file
+
+- name: Download initialAdminPassword
+  fetch:
+    src: /var/lib/jenkins/secrets/initialAdminPassword
+    dest: ./files/
+  when: initialAdminPassword_file.stat.exists
