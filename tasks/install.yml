@@ -1,0 +1,4 @@
+---
+- name: Check os of remote
+  debug: 
+    msg: "{{ hostvars[inventory_hostname].ansible_distribution }}"
