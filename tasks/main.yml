@@ -1,6 +1,3 @@
 ---
 - name: Install Jenkins
   import_tasks: install.yml
-
-- name: Configure Jenkins
-  import_tasks: config.yml
