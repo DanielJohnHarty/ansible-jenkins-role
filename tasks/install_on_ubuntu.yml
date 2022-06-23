@@ -17,7 +17,7 @@
 
 - name: Install Jenkins
   apt:
-    name: jenkins=2.346.1
+    name: '{{ JENKINS_PACKAGE }}'
     state: present 
     update_cache: yes # apt update
     autoremove: yes # Remove unused dependencies
