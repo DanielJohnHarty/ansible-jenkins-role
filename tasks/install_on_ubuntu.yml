@@ -8,8 +8,8 @@
     jenkins_installed: '{{"jenkins/" in jenkins_install_check.stdout }}'
 
 - name: Get Jenkins signature keyring
-  get_url: 
-    url: https://pkg.jenkins.io/debian-stable/jenkins.io.key 
+  get_url:
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
     dest: /usr/share/keyrings/jenkins-keyring.asc
   when: not jenkins_installed
 
@@ -33,7 +33,7 @@
 - name: Install Jenkins
   apt:
     name: '{{ JENKINS_PACKAGE }}'
-    state: present 
+    state: present
     update_cache: yes # apt update
     autoremove: yes # Remove unused dependencies
 
@@ -46,17 +46,6 @@
     marker: "# ANSIBLE MANAGED BLOCK"
   when: JENKINS_PORT != 8080
 
-- name: Check if correct JAVA already installed
-  command: apt list --installed {{ JAVA_VERSION }}
-  register: java_install_check
-
-- name: Install Java 11
-  apt:
-    name: '{{ JAVA_VERSION }}'
-    state: present
-  when: |
-    '{{ JAVA_VERSION }}' in java_install_check.stdout
-
 - name: Enable Jenkins service
   ansible.builtin.service:
     name: jenkins
@@ -66,14 +55,3 @@
   ansible.builtin.service:
     name: jenkins
     state: started
-
-- name: Check if initialAdminPassword file exists
-  stat:
-    path: /var/lib/jenkins/secrets/initialAdminPassword
-  register: initialAdminPassword_file
-
-- name: Download initialAdminPassword
-  fetch:
-    src: /var/lib/jenkins/secrets/initialAdminPassword
-    dest: ./files/
-  when: initialAdminPassword_file.stat.exists
