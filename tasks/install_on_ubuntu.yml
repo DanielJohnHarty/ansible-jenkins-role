@@ -20,10 +20,15 @@
       /etc/apt/sources.list.d/jenkins.list > /dev/null
   when: not jenkins_installed
 
-- name: Install xz-utils
+- name: Check if correct JAVA already installed
+  command: apt list --installed {{ JAVA_VERSION }}
+  register: java_install_check
+
+- name: Install Java 11
   apt:
-    name: xz-utils
+    name: '{{ JAVA_VERSION }}'
     state: present
+  when: not '{{ JAVA_VERSION }}' in java_install_check.stdout
 
 - name: Install Jenkins
   apt:
