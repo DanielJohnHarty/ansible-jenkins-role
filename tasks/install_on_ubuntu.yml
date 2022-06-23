@@ -33,6 +33,10 @@
     marker: "# ANSIBLE MANAGED BLOCK"
   when: JENKINS_PORT != 8080
 
+- name: Check if correct JAVA already installed
+  command: apt list --installed {{ JAVA_VERSION }}
+  register: java_install_check
+
 - name: Install Java 11
   apt:
     name: '{{ JAVA_VERSION }}'
