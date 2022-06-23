@@ -1,12 +1,11 @@
 ---
 - name: Check if Jenkins already installed
-  command: apt list --installed {{ JENKINS_PACKAGE }}
-  register: jeninks_install_check
+  command: apt list --installed jenkins
+  register: jenkins_install_check
 
 - name: Parse jenkins_install_check output
-  set_fact: 
-    jenkins_installed: |
-      '{{ JENKINS_PACKAGE }}' in jeninks_install_check.stdout
+  set_fact:
+    jenkins_installed: '{{"jenkins/" in jenkins_install_check.stdout }}'
 
 - name: Get Jenkins signature keyring
   get_url: 
