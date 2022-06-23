@@ -33,7 +33,6 @@
     update_cache: yes # apt update
     autoremove: yes # Remove unused dependencies
   register: task_result
-  ignore_errors: yes # TODO Find a better way to deal with failures
 
 - name: Update JENKINS_PORT if necessary
   blockinfile:
