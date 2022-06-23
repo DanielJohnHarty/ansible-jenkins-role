@@ -36,7 +36,6 @@
     state: present 
     update_cache: yes # apt update
     autoremove: yes # Remove unused dependencies
-  register: task_result
 
 - name: Update JENKINS_PORT if necessary
   blockinfile:
