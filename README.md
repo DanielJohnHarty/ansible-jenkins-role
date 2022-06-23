@@ -1,22 +1,18 @@
 # ansible-jenkins-role
 
-Ansible role used to deploy Jenkins to a server.
+Ansible role used to deploy Jenkins to a server running Ubuntu. No other OS are supported by this role.
 
 Configures Jenkins with administrator and tests that the web server is running on deployment.
-
 
 ### Example ansible deployment
 
 ```
-# ./inventory/hosts
+# Generate an Ansible hosts file from `inventory/all.yml`
+ansible-playbook generate-ansible-hosts-file.yml
 
-[jenkins_server]
-server_01
-server_02
-```
+# Run necessary preparations on server
+ansible-playbook deploy-server-prerequisites.yml
 
-```
-# ./deploy_jenkins.yml
-
-- import-playbook: ./path/to/ansible-jenkins-role/playbooks/jenkins.yml
+# Deploy jenkins to server
+ansible-playbook deploy-jenkins.yml
 ```
