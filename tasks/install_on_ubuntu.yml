@@ -35,12 +35,10 @@
 
 - name: Install Java 11
   apt:
-    name: openjdk-11-jre
+    name: '{{ JAVA_VERSION }}'
     state: present
-
-- name: Remove unecessary dependencies
-  apt:
-    autoremove: yes
+  when: |
+    '{{ JAVA_VERSION }}' in java_install_check.stdout
 
 - name: Enable Jenkins service
   ansible.builtin.service:
