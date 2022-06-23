@@ -1,14 +1,25 @@
 ---
+- name: Check if Jenkins already installed
+  command: apt list --installed {{ JENKINS_PACKAGE }}
+  register: jeninks_install_check
+
+- name: Parse jenkins_install_check output
+  set_fact: 
+    jenkins_installed: |
+      '{{ JENKINS_PACKAGE }}' in jeninks_install_check.stdout
+
 - name: Get Jenkins signature keyring
   get_url: 
     url: https://pkg.jenkins.io/debian-stable/jenkins.io.key 
     dest: /usr/share/keyrings/jenkins-keyring.asc
+  when: not jenkins_installed
 
 - name: Add jenkins repo to debian-stable repositories # https://www.jenkins.io/doc/book/installing/linux/#debianubuntu
   shell: |
     echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
       https://pkg.jenkins.io/debian-stable binary/ | tee \
       /etc/apt/sources.list.d/jenkins.list > /dev/null
+  when: not jenkins_installed
 
 - name: Install xz-utils
   apt:
