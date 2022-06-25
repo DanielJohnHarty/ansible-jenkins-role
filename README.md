@@ -4,6 +4,8 @@ Ansible role used to deploy Jenkins to a server running Ubuntu. No other OS are 
 
 Configures Jenkins with administrator and tests that the web server is running on deployment.
 
+Requires a Java installation compatible with Jenkins (defaults to `openjdk-11-jre`).
+
 ### Example ansible deployment
 
 ```
