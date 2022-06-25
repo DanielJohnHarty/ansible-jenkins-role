@@ -10,6 +10,7 @@ JAVA_VERSION: openjdk-11-jre
 deploy_self_signed_cert: yes
 enable_https: yes
 domain: your-domain.com
+create_keystore_and_truststore: yes
 keystore_location: /etc/ssl/certs/keystore.jks
 keystore_password: Keystore123!
 truststore_location: /etc/ssl/certs/truststore.jks

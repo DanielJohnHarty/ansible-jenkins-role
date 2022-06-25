@@ -42,6 +42,7 @@
   block:
     - name: Create keystore and truststore
       import_tasks: create-keystore-and-truststore.yml
+      when: create_keystore_and_truststore
 
     - name: Template Jenkins service file (HTTPS)
       template:
