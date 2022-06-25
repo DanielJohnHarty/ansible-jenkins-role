@@ -1,4 +1,3 @@
-JENKINS_PORT: 8080
 JENKINS_HOST_USER: ubuntu
 JENKINS_HOST_IP: XXX.XXX.XXX.XXX
 JENKINS_SERVER_SSH_KEY: /path/to/ssh/private_key
@@ -21,5 +20,5 @@ ca_home_dir: /etc/security/ca
 ca_filename: 'root.pem'
 path_to_ca: '{{ ca_home_dir }}/{{ ca_filename }}'
 cert_dir: '{{ ca_home_dir }}/certs'
-path_to_cert: '{{ cert_dir }}/{{ domain }}.pem'
-path_to_cert_key: '{{ cert_dir }}/{{ domain }}.key'
+path_to_cert: '{{ cert_dir }}/{{ fqdn }}.pem'
+path_to_cert_key: '{{ cert_dir }}/{{ fqdn }}.key'
