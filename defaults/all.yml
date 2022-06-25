@@ -8,4 +8,17 @@ JAVA_VERSION: openjdk-11-jre
 
 # Deploying self signed cert for https Jenkins
 deploy_self_signed_cert: yes
+enable_https: yes
 domain: your-domain.com
+keystore_location: /etc/ssl/certs/keystore.jks
+keystore_password: Keystore123!
+truststore_location: /etc/ssl/certs/truststore.jks
+truststore_password: Truststore123!
+
+ca_name: TestCA
+ca_home_dir: /etc/security/ca
+ca_filename: 'root.pem'
+path_to_ca: '{{ ca_home_dir }}/{{ ca_filename }}'
+cert_dir: '{{ ca_home_dir }}/certs'
+path_to_cert: '{{ cert_dir }}/{{ domain }}.pem'
+path_to_cert_key: '{{ cert_dir }}/{{ domain }}.key'

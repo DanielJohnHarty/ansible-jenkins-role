@@ -30,28 +30,41 @@
     state: present
   when: not '{{ JAVA_VERSION }}' in java_install_check.stdout
 
-- name: Install Jenkins
+- name: Install Jenkins using apt
   apt:
     name: '{{ JENKINS_PACKAGE }}'
     state: present
     update_cache: yes # apt update
     autoremove: yes # Remove unused dependencies
 
-- name: Update JENKINS_PORT if necessary
-  blockinfile:
-    path: /lib/systemd/system/jenkins.service
-    block: |
-      [Service]
-      Environment="JENKINS_PORT={{ JENKINS_PORT }}"
-    marker: "# ANSIBLE MANAGED BLOCK"
-  when: JENKINS_PORT != 8080
-
-- name: Enable Jenkins service
-  ansible.builtin.service:
+- name: Stop Jenkins
+  service:
     name: jenkins
-    enabled: yes
+    state: stopped
 
-- name: Restart Jenkins service
-  ansible.builtin.service:
+# HTTPS CONFIG
+- name: Deploy HTTPS service config
+  block:
+    - name: Create keystore and truststore
+      import_tasks: create-keystore-and-truststore.yml
+
+    - name: Template Jenkins service file (HTTPS)
+      template:
+        src:  jenkins.serviceHTTPS.j2
+        dest: /lib/systemd/system/jenkins.service
+  when: enable_https
+
+# HTTP CONFIG
+- name: Template Jenkins service file
+  template:
+    src:  jenkins.service.j2
+    dest: /lib/systemd/system/jenkins.service
+  when: not enable_https
+
+- name: reload systemd
+  command: systemctl daemon-reload
+
+- name: Start Jenkins
+  service:
     name: jenkins
     state: started
