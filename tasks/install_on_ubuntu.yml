@@ -20,10 +20,14 @@
       /etc/apt/sources.list.d/jenkins.list > /dev/null
   when: not jenkins_installed
 
-- name: Fail when {{ JAVA_VERSION }} dependency missing
-  command: apt list --installed {{ JAVA_VERSION }}
+- name: Update apt package repository
+  apt:
+    update_cache: yes
+
+- name: 'Fail on missing {{ JAVA_VERSION }} dependency'
+  command: 'apt list --installed {{ JAVA_VERSION }}'
   register: java_install_check
-  failed_when: not '{{ JAVA_VERSION }}' in java_install_check.stdout
+  failed_when: not JAVA_VERSION in java_install_check.stdout
 
 - name: Install Jenkins using apt
   apt:
