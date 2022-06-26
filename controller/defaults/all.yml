@@ -6,6 +6,7 @@ JAVA_VERSION: openjdk-11-jre
 # Deploying self signed cert for https Jenkins
 deploy_self_signed_cert: yes
 enable_https: yes
+https_port: 8443
 fqdn: your-fqdn.com
 create_keystore_and_truststore: yes
 keystore_location: /etc/ssl/certs/keystore.jks
