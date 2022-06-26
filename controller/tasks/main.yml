@@ -6,3 +6,7 @@
   import_tasks: install_on_ubuntu.yml
   when: remote_os == 'Ubuntu'
   failed_when: remote_os != 'Ubuntu'
+
+- name: Install jenkins-cli
+  import_tasks: install_jenkins_cli.yml
+  when: install_jenkins_cli

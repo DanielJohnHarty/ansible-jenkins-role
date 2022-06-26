@@ -21,3 +21,9 @@ path_to_ca: '{{ ca_home_dir }}/{{ ca_filename }}'
 cert_dir: '{{ ca_home_dir }}/certs'
 path_to_cert: '{{ cert_dir }}/{{ fqdn }}.pem'
 path_to_cert_key: '{{ cert_dir }}/{{ fqdn }}.key'
+
+install_jenkins_cli: yes
+jenkins_web_protocol: '{{ "https" if enable_https else "http" }}'
+jenkins_url: '{{ jenkins_web_protocol }}://{{ fqdn }}:{{ https_port }}'
+jenkins_cli_jar_uri: '{{ jenkins_url }}/jnlpJars/jenkins-cli.jar'
+# Plugins to install
