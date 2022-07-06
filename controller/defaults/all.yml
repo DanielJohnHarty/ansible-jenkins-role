@@ -26,4 +26,9 @@ install_jenkins_cli: yes
 jenkins_web_protocol: '{{ "https" if enable_https else "http" }}'
 jenkins_url: '{{ jenkins_web_protocol }}://{{ fqdn }}:{{ https_port }}'
 jenkins_cli_jar_uri: '{{ jenkins_url }}/jnlpJars/jenkins-cli.jar'
+jenkins_cli_launch_command: >
+    java -Djavax.net.ssl.trustStore={{ truststore_location }}
+    -Djavax.net.ssl.trustStorePassword={{ truststore_password }}
+    -jar /usr/bin/jenkins-cli.jar -s {{ jenkins_url }}
+
 # Plugins to install
