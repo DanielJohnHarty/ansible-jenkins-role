@@ -1,0 +1,15 @@
+---
+- name: Read temporary Jenkins secret variable
+  shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+  register: temp_jenkins_secret
+  failed_when: no
+
+- name: Manual action pause
+  ansible.builtin.pause:
+    prompt: |
+      Jenkins is deployed.
+      Go to {{ jenkins_url }} and use the following secret:
+        {{ temp_jenkins_secret.stdout }}
+      Follow the prompts and create the admin user {{ jenkins_admin_user }}
+      with the password {{ jenkins_admin_user_password }}. Once this user 
+      is created press enter to continue with the deployment.

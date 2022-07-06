@@ -10,3 +10,10 @@
 - name: Install jenkins-cli
   import_tasks: install_jenkins_cli.yml
   when: install_jenkins_cli
+
+- name: Prompt for manual input
+  import_tasks: jenkins_setup_wizard.yml
+
+- name: Install additional plugins
+  import_tasks: install_plugins.yml
+  when: plugins_to_install
