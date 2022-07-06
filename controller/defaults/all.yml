@@ -31,4 +31,7 @@ jenkins_cli_launch_command: >
     -Djavax.net.ssl.trustStorePassword={{ truststore_password }}
     -jar /usr/bin/jenkins-cli.jar -s {{ jenkins_url }}
 
+jenkins_admin_user: admin
+jenkins_admin_user_password: admin123
+
 # Plugins to install
