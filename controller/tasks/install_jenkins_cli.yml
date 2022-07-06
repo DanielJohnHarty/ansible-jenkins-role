@@ -7,12 +7,7 @@
 
 - name: Create alias
   ansible.builtin.lineinfile:
-    path: /etc/bash.bashrc
-    line: |
-      alias jenkins-cli='java \
-      -Djavax.net.ssl.trustStore={{ truststore_location }} \
-      -Djavax.net.ssl.trustStorePassword={{ truststore_password }} \
-      -jar /usr/bin/jenkins-cli.jar \
-      -s {{ jenkins_url }}'
+    path: /home/{{ JENKINS_HOST_USER }}/.bashrc
+    line: 'alias jenkins-cli={{ jenkins_cli_launch_command }}'
     # Find a more secure way to do this
 
