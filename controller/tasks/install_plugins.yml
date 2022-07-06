@@ -1,0 +1,4 @@
+---
+- name: Install additional plugins
+  command: '{{ jenkins_cli_launch_command }} -auth {{ jenkins_admin_user }}:{{ jenkins_admin_user_password }} install-plugin {{ item }}'
+  with_items: '{{ plugins_to_install }}'
