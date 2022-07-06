@@ -35,3 +35,10 @@ jenkins_admin_user: admin
 jenkins_admin_user_password: admin123
 
 # Plugins to install
+plugins_to_install:
+  - 'ec2:1.68'
+  - 'kubernetes:3651.v908e7db_10d06'
+  - 'azure-vm-agents:822.v3a18fc3d2de1'
+  - 'configuration-as-code:1464.vd8507b_82e41a_'
+  - 'blueocean:1.25.5'
+
