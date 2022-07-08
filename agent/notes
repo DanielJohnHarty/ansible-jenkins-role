@@ -1,0 +1,63 @@
+CREATE AGENT
+
+1. Create ssh key pair on agent
+2. add pub key to the authorized keyfile at {{jenkins agent root dir}}/.ssh/authorized_keys on agent
+3. Create credentials on jenkins ui ssh and use the {{ jenkins_user }} username and the private key which was generated in step 1
+   - Choose manually trust for the host check
+4. Create node using the jenkins ui, using the credentials created in step 3 and pointing to the ssh port of the agent (22)
+5. Ensure port 22 is accessible from the controller host
+6. Optionally install docker.io
+
+
+
+
+Open Jenkins
+echo 'jenkins.model.Jenkins.instance.securityRealm.createAccount("user", "password")' | java -jar jenkins-cli.jar -auth admin:c3a5dcd6bc3f45ee8d6c9f0f5abc14c0 -s http://localhost:8080/ groovy =
+
+Create new admin user
+echo 'jenkins.model.Jenkins.instance.securityRealm.createAccount("NEW_USER", "NEW_USER_PASSWORD")' | java -jar ./jenkins-cli.jar -s "JENKINS_URL" -auth JENKINS_ADMIN_USER:JENKINS_ADMIN_PASSWORD -noKeyAuth groovy = –
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+wget https://ec2-3-74-105-126.eu-central-1.compute.amazonaws.com:8443/jnlpJars/agent.jar --no-check-certificate
+java -Djavax.net.ssl.trustStore=/etc/ssl/certs/truststore.jks -Djavax.net.ssl.trustStorePassword=Truststore123! -jar agent.jar -jnlpUrl https://ec2-3-74-105-126.eu-central-1.compute.amazonaws.com:8443/computer/agent1/jenkins-agent.jnlp -secret b059a92d4db8122dc7cc51590af42000c2d843e21fa3979af89e122e77c2c7b0 -workDir "/home/jenkins/agent1"
+
+
+# on controller 
+ubuntu@ip-172-31-149-58:~$ sudo chown -R ubuntu:ubuntu /var/jenkins
+ubuntu@ip-172-31-149-58:~$ sudo chmod -R +x /var/jenkins
+===
+ubuntu@ip-172-31-149-58:~$ java -jar agent.jar -jnlpUrl https://ec2-3-74-105-126.eu-central-1.compute.amazonaws.com:8443/computer/agent%2D01/jenkins-agent.jnlp -secret @secret-file -workDir "/var/jenkins" -noCertificateCheck
+wget {{ jenkins_url }}/jnlpJars/agent.jarwget https://ec2-3-74-105-126.eu-central-1.compute.amazonaws.com:8443/jnlpJars/agent.jar --no-check-certificate
+java -Djavax.net.ssl.trustStore=/etc/ssl/certs/truststore.jks -Djavax.net.ssl.trustStorePassword=Truststore123! -jar agent.jar -jnlpUrl https://ec2-3-74-105-126.eu-central-1.compute.amazonaws.com:8443/computer/agent%2D01/jenkins-agent.jnlp -secret e90d134b3ffdee6e7c5bb707b5798c7e510e33b1e952cc23fbcc66b851b641dc -workDir "/var/jenkins"
+===
+sudo mkdir /var/jenkins
+sudo apt update
+sudo apt install ansible -y
+sudo apt install vagrant
+wget {{ jenkins_url }}/jnlpJars/agent.jar
+java -jar agent.jar -jnlpUrl {{ jenkins_url }}/computer/agent%2D01/jenkins-agent.jnlp -secret @secret-file -workDir "/var/jenkins" -noCertificateCheck
